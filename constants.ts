@@ -11,7 +11,7 @@ export const NAV_LINKS = [
 ];
 
 export const SKILLS: Skill[] = [
-  { name: 'VLSI Design (Cadence)', level: 90 },
+  { name: 'VLSI Design (Cadence)', level: 100 },
   { name: 'Circuit Design', level: 95 },
   { name: 'Embedded Systems', level: 90 },
   { name: 'MATLAB / Simulink', level: 85 },
