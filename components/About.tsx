@@ -1,7 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Award, Zap, BookOpen, Activity, CheckCircle2, Trophy, GraduationCap, Calendar, MapPin } from 'lucide-react';
+import {
+  Cpu,
+  Award,
+  Zap,
+  BookOpen,
+  Activity,
+  CheckCircle2,
+  Trophy,
+  GraduationCap,
+  ZoomIn,
+  FileText,
+  X,
+  ExternalLink,
+} from 'lucide-react';
 import { PROFILE, EDUCATION } from '../constants';
+
+interface EducationDoc {
+  title: string;
+  type: 'Certificate' | 'Transcript';
+  image: string;
+  previewLabel: string;
+}
+
+const bscDocs: EducationDoc[] = [
+  {
+    title: 'B.Sc. in Electrical & Electronic Engineering – Provisional Certificate',
+    type: 'Certificate',
+    image: '/img/education/bsc-certificate.jpg',
+    previewLabel: 'Certificate',
+  },
+  {
+    title: 'Academic Transcript (Page 1) – B.Sc. in Electrical & Electronic Engineering',
+    type: 'Transcript',
+    image: '/img/education/bsc-transcript-p1.jpg',
+    previewLabel: 'Transcript (P1)',
+  },
+  {
+    title: 'Academic Transcript (Page 2) – B.Sc. in Electrical & Electronic Engineering (CGPA 3.96)',
+    type: 'Transcript',
+    image: '/img/education/bsc-transcript-p2.jpg',
+    previewLabel: 'Transcript (P2)',
+  },
+];
+
+const hscDocs: EducationDoc[] = [
+  {
+    title: 'Higher Secondary Certificate (HSC) – Rajshahi Board Certificate',
+    type: 'Certificate',
+    image: '/img/education/hsc-certificate.jpg',
+    previewLabel: 'Certificate',
+  },
+  {
+    title: 'Higher Secondary Certificate (HSC) – Academic Transcript (GPA 5.00)',
+    type: 'Transcript',
+    image: '/img/education/hsc-transcript.jpg',
+    previewLabel: 'Transcript',
+  },
+];
 
 const stats = [
   {
@@ -50,6 +106,17 @@ const checklist = [
 ];
 
 const About: React.FC = () => {
+  const [selectedDoc, setSelectedDoc] = useState<EducationDoc | null>(null);
+
+  useEffect(() => {
+    if (!selectedDoc) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedDoc(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedDoc]);
+
   return (
     <section id="about" className="py-20 sm:py-28 bg-slate-900/60 dark:bg-dark-900/90 relative overflow-hidden circuit-grid-dense border-t border-b border-slate-800/80">
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
@@ -177,31 +244,71 @@ const About: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="p-6 rounded-2xl bg-slate-950/90 border border-slate-800 hover:border-cyan-400/50 backdrop-blur-sm transition-all duration-300 relative group"
+              className="p-6 rounded-2xl bg-slate-950/90 border border-slate-800 hover:border-cyan-400/50 backdrop-blur-sm transition-all duration-300 relative group flex flex-col justify-between"
             >
-              <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                <span className="px-2.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/30 text-cyan-300 font-mono text-xs font-semibold">
-                  2022 – 2026
-                </span>
-                <span className="text-sm font-mono font-bold text-cyan-400">
-                  CGPA 3.96 / 4.00
-                </span>
+              <div>
+                <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                  <span className="px-2.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/30 text-cyan-300 font-mono text-xs font-semibold">
+                    2022 – 2026
+                  </span>
+                  <span className="text-sm font-mono font-bold text-cyan-400">
+                    CGPA 3.96 / 4.00
+                  </span>
+                </div>
+
+                <h4 className="text-lg sm:text-xl font-heading font-bold text-white mb-1.5 group-hover:text-cyan-300 transition-colors">
+                  Bachelor of Electrical & Electronic Engineering
+                </h4>
+
+                <div className="text-sm text-slate-300 mb-1 font-medium">
+                  Daffodil International University, Dhaka
+                </div>
+                <div className="text-xs text-slate-400 mb-4 font-light">
+                  Faculty of Engineering
+                </div>
+
+                <div className="p-3 rounded-lg bg-slate-900/80 border border-cyan-500/20 text-xs font-mono text-emerald-400 flex items-center gap-2 mb-5">
+                  <Trophy size={14} className="shrink-0 text-cyan-400" />
+                  <span>1st in Department · EEE 37th Batch (221) · 283 students</span>
+                </div>
               </div>
 
-              <h4 className="text-lg sm:text-xl font-heading font-bold text-white mb-1.5 group-hover:text-cyan-300 transition-colors">
-                Bachelor of Electrical & Electronic Engineering
-              </h4>
-
-              <div className="text-sm text-slate-300 mb-1 font-medium">
-                Daffodil International University, Dhaka
-              </div>
-              <div className="text-xs text-slate-400 mb-4 font-light">
-                Faculty of Engineering
-              </div>
-
-              <div className="p-3 rounded-lg bg-slate-900/80 border border-cyan-500/20 text-xs font-mono text-emerald-400 flex items-center gap-2">
-                <Trophy size={14} className="shrink-0 text-cyan-400" />
-                <span>1st in Department · EEE 37th Batch (221) · 283 students</span>
+              {/* Clickable Certificate & Transcript Pictures */}
+              <div className="pt-4 border-t border-slate-800/80">
+                <div className="text-[11px] font-mono text-cyan-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <FileText size={13} />
+                    Certificate & Transcripts:
+                  </span>
+                  <span className="text-[10px] text-slate-500 font-normal">Click to View</span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {bscDocs.map((doc) => (
+                    <button
+                      key={doc.image}
+                      type="button"
+                      onClick={() => setSelectedDoc(doc)}
+                      aria-label={`View ${doc.title}`}
+                      className="group/doc relative rounded-lg overflow-hidden border border-slate-800 hover:border-cyan-400 bg-slate-900 aspect-[3/4] flex flex-col justify-end p-2 text-left transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] cursor-pointer"
+                    >
+                      <img
+                        src={doc.image}
+                        alt={doc.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover object-top opacity-70 group-hover/doc:opacity-95 transition-opacity"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none" />
+                      <div className="relative z-10 flex items-center justify-between w-full">
+                        <span className="text-[9px] sm:text-[10px] font-mono text-cyan-300 font-semibold px-1 py-0.5 rounded bg-slate-950/85 border border-cyan-500/20">
+                          {doc.previewLabel}
+                        </span>
+                        <span className="p-1 rounded-full bg-slate-950/90 text-cyan-400 border border-cyan-500/30 opacity-80 group-hover/doc:opacity-100">
+                          <ZoomIn size={10} />
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </motion.div>
 
@@ -211,36 +318,132 @@ const About: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="p-6 rounded-2xl bg-slate-950/90 border border-slate-800 hover:border-sky-400/50 backdrop-blur-sm transition-all duration-300 relative group"
+              className="p-6 rounded-2xl bg-slate-950/90 border border-slate-800 hover:border-sky-400/50 backdrop-blur-sm transition-all duration-300 relative group flex flex-col justify-between"
             >
-              <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                <span className="px-2.5 py-0.5 rounded bg-sky-950/80 border border-sky-500/30 text-sky-300 font-mono text-xs font-semibold">
-                  2020
-                </span>
-                <span className="text-sm font-mono font-bold text-sky-400">
-                  GPA 5.00 / 5.00
-                </span>
+              <div>
+                <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                  <span className="px-2.5 py-0.5 rounded bg-sky-950/80 border border-sky-500/30 text-sky-300 font-mono text-xs font-semibold">
+                    2020
+                  </span>
+                  <span className="text-sm font-mono font-bold text-sky-400">
+                    GPA 5.00 / 5.00
+                  </span>
+                </div>
+
+                <h4 className="text-lg sm:text-xl font-heading font-bold text-white mb-1.5 group-hover:text-sky-300 transition-colors">
+                  Higher Secondary Certificate (HSC) – Science
+                </h4>
+
+                <div className="text-sm text-slate-300 mb-1 font-medium">
+                  Rajshahi Govt. City College
+                </div>
+                <div className="text-xs text-slate-400 mb-4 font-light">
+                  Rajshahi Education Board
+                </div>
+
+                <div className="p-3 rounded-lg bg-slate-900/80 border border-sky-500/20 text-xs font-mono text-sky-300 flex items-center gap-2 mb-5">
+                  <Award size={14} className="shrink-0 text-sky-400" />
+                  <span>Golden GPA 5.00 · Higher Secondary Science Division</span>
+                </div>
               </div>
 
-              <h4 className="text-lg sm:text-xl font-heading font-bold text-white mb-1.5 group-hover:text-sky-300 transition-colors">
-                Higher Secondary Certificate (HSC) – Science
-              </h4>
-
-              <div className="text-sm text-slate-300 mb-1 font-medium">
-                Rajshahi Govt. City College
-              </div>
-              <div className="text-xs text-slate-400 mb-4 font-light">
-                Rajshahi Education Board
-              </div>
-
-              <div className="p-3 rounded-lg bg-slate-900/80 border border-sky-500/20 text-xs font-mono text-sky-300 flex items-center gap-2">
-                <Award size={14} className="shrink-0 text-sky-400" />
-                <span>Golden GPA 5.00 · Higher Secondary Science Division</span>
+              {/* Clickable Certificate & Transcript Pictures */}
+              <div className="pt-4 border-t border-slate-800/80">
+                <div className="text-[11px] font-mono text-sky-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <FileText size={13} />
+                    Certificate & Transcript:
+                  </span>
+                  <span className="text-[10px] text-slate-500 font-normal">Click to View</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2.5">
+                  {hscDocs.map((doc) => (
+                    <button
+                      key={doc.image}
+                      type="button"
+                      onClick={() => setSelectedDoc(doc)}
+                      aria-label={`View ${doc.title}`}
+                      className="group/doc relative rounded-lg overflow-hidden border border-slate-800 hover:border-sky-400 bg-slate-900 aspect-[4/3] flex flex-col justify-end p-2 text-left transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-[0_0_15px_rgba(56,189,248,0.25)] cursor-pointer"
+                    >
+                      <img
+                        src={doc.image}
+                        alt={doc.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover object-top opacity-70 group-hover/doc:opacity-95 transition-opacity"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none" />
+                      <div className="relative z-10 flex items-center justify-between w-full">
+                        <span className="text-[9px] sm:text-[10px] font-mono text-sky-300 font-semibold px-1 py-0.5 rounded bg-slate-950/85 border border-sky-500/20">
+                          {doc.previewLabel}
+                        </span>
+                        <span className="p-1 rounded-full bg-slate-950/90 text-sky-400 border border-sky-500/30 opacity-80 group-hover/doc:opacity-100">
+                          <ZoomIn size={10} />
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </div>
+
+      {/* Clickable Image Modal for Certificate & Transcript */}
+      {selectedDoc && (
+        <div
+          className="fixed inset-0 z-[60] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedDoc.title}
+          onClick={() => setSelectedDoc(null)}
+        >
+          <div
+            className="relative max-w-4xl w-full max-h-[92vh] flex flex-col rounded-2xl bg-slate-900 border border-cyan-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-950/80">
+              <div className="flex items-center gap-2.5 min-w-0 pr-3">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 shrink-0">
+                  {selectedDoc.type}
+                </span>
+                <span className="font-heading font-semibold text-white text-xs sm:text-sm truncate">
+                  {selectedDoc.title}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <a
+                  href={selectedDoc.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-cyan-400 hover:bg-slate-700 transition-colors"
+                  title="Open full size in new tab"
+                >
+                  <ExternalLink size={16} />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setSelectedDoc(null)}
+                  className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-red-400 hover:bg-slate-700 transition-colors cursor-pointer"
+                  aria-label="Close"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body / Image */}
+            <div className="flex-1 overflow-auto p-3 sm:p-5 flex items-center justify-center bg-slate-950/60">
+              <img
+                src={selectedDoc.image}
+                alt={selectedDoc.title}
+                className="max-h-[78vh] w-auto max-w-full rounded-lg shadow-2xl object-contain border border-slate-800"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
