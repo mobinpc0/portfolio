@@ -291,6 +291,9 @@ export const RESEARCH: ResearchItem[] = [
       'A Software-Defined Digital Twin Framework for Enhanced Tele-Laboratory Manipulation in Bio-Hazardous and High-Risk Environments',
     venue: '2nd International Conference on Quantum Photonics, Artificial Intelligence & Networking (QPAIN 2026)',
     year: 'April 2026',
+    paperId: '4310',
+    certificateImage: '/img/certs/cert-qpain-2026.jpg',
+    certificateTitle: 'Certificate of Presentation · QPAIN 2026 (Paper ID: 4310)',
     authors: [
       'Md. Tanvir Hassan',
       'Sourav Karmokar',
@@ -307,8 +310,10 @@ export const RESEARCH: ResearchItem[] = [
     title:
       'A Novel Hexagonal Shaped Suspended-Core Microstructured Fiber for Mid-Infrared Supercontinuum Generation',
     venue:
-      '2026 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEEIACON 2026)',
+      '2026 IEEE International Conference on Power, Electrical, Electronics and Industrial Applications (PEEIACON 2026)',
     year: 'August 2026',
+    certificateImage: '/img/certs/cert-peeiacon-2026.png',
+    certificateTitle: 'Certificate of Presentation · PEEIACON 2026',
     authors: ['Shourov Paul', 'Md. Samiul Islam Mobin', 'Abu Sayem', 'Rakayet Rafi', 'M R Karim'],
     status: 'Presented · IEEE Xplore publication forthcoming',
   },
@@ -320,6 +325,9 @@ export const RESEARCH: ResearchItem[] = [
     venue:
       '2026 IEEE 5th International Conference on Robotics, Automation, Artificial-Intelligence and Internet-of-Things (RAAICON 2026)',
     year: 'September 2026',
+    paperId: '524',
+    certificateImage: '/img/certs/cert-raaicon-2026.png',
+    certificateTitle: 'Certificate of Presentation · IEEE RAAICON 2026 (Paper ID: 524)',
     authors: ['Shourov Paul', 'Md. Samiul Islam Mobin', 'Abu Sayem', 'M R Karim'],
     status: 'Presented · IEEE Xplore publication forthcoming',
   },

@@ -57,6 +57,9 @@ export interface ResearchItem {
   authors: string[];
   doi?: string;
   status?: string;
+  paperId?: string;
+  certificateImage?: string;
+  certificateTitle?: string;
 }
 
 export interface Achievement {
