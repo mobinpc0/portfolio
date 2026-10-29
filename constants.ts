@@ -16,7 +16,7 @@ export const PROFILE = {
   linkedinLabel: 'linkedin.com/in/samiulmobin',
   github: 'https://github.com/mobinpc0',
   githubLabel: 'github.com/mobinpc0',
-  location: 'Mirpur-1, Dhaka, Bangladesh',
+  location: 'Mirpur-2, Dhaka, Bangladesh',
 };
 
 export const NAV_LINKS = [

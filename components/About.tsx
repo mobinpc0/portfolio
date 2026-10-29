@@ -160,7 +160,7 @@ const About: React.FC = () => {
                 </div>
 
                 <div className="mt-3 pt-3 border-t border-slate-800 flex justify-between items-center text-[10px] font-mono text-slate-400">
-                  <span>LOC: MIRPUR-1, DHAKA</span>
+                  <span>LOC: MIRPUR-2, DHAKA</span>
                   <span className="text-emerald-400">CGPA: 3.96/4.00</span>
                 </div>
               </div>
