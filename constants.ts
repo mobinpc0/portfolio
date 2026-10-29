@@ -281,6 +281,9 @@ export const RESEARCH: ResearchItem[] = [
     venue:
       '11th International Women in Engineering Conference on Electrical and Computer Engineering (WIECON-ECE 2025)',
     year: 'December 2025',
+    paperId: '316',
+    certificateImage: '/img/certs/cert-wiecon-2025.png',
+    certificateTitle: 'Certificate of Presentation · WIECON-ECE 2025 (Paper ID: 316)',
     authors: ['Md. Tanvir Hassan', 'Md. Samiul Islam Mobin', 'Sourav Karmokar', 'Dr. Tama Fouzder'],
     doi: WIECON_DOI,
   },
