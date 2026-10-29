@@ -55,8 +55,8 @@ const ToolTile: React.FC<{ tool: Tool }> = ({ tool }) => (
 );
 
 const Skills: React.FC = () => {
-  // First domain ('circuit') open by default; others collapsed
-  const [openIds, setOpenIds] = useState<Set<string>>(new Set(['circuit']));
+  // All domains collapsed by default
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
 
   const toggleDomain = (id: string) => {
     setOpenIds((prev) => {
