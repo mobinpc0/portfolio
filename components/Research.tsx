@@ -1,57 +1,80 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { RESEARCH, EXPERIENCES } from '../constants';
+import { RESEARCH } from '../constants';
+import { BookOpen, Terminal, ExternalLink, Clock } from 'lucide-react';
+
+const OWNER = 'Samiul';
 
 const Research: React.FC = () => {
   return (
-    <section id="research" className="py-16 sm:py-24 bg-white dark:bg-black">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-
-          {/* Research Column */}
-          <div>
-            <h3 className="text-sm font-bold tracking-widest text-gold-500 mb-8">RESEARCH & PUBLICATIONS</h3>
-            <div className="space-y-12">
-              {RESEARCH.map((item) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="border-l-2 border-gray-200 dark:border-gray-800 pl-6 hover:border-gold-500 transition-colors"
-                >
-                  <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{item.title}</h4>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 font-serif italic">{item.journal}, {item.year}</p>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{item.abstract}</p>
-                </motion.div>
-              ))}
-            </div>
+    <section id="research" className="py-20 sm:py-28 bg-slate-900/40 dark:bg-dark-900/80 circuit-grid-dense border-t border-b border-slate-800/80 relative overflow-hidden">
+      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="container mx-auto px-4 sm:px-6 max-w-6xl relative z-10">
+        <div className="mb-14 sm:mb-16 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-3">
+            <Terminal size={13} /> // 05. RESEARCH & PUBLICATIONS
           </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight">
+            Research & Publications
+          </h2>
+          <p className="text-slate-400 max-w-2xl mx-auto mt-3 text-sm sm:text-base font-light">
+            Four conference papers across IoT, digital twins, optical fiber design and sensing.
+          </p>
+        </div>
 
-          {/* Experience Column */}
-          <div>
-            <h3 className="text-sm font-bold tracking-widest text-gold-500 mb-8">EXPERIENCE</h3>
-            <div className="space-y-12">
-              {EXPERIENCES.map((exp) => (
-                <motion.div
-                  key={exp.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <div className="flex justify-between items-baseline mb-2">
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white">{exp.role}</h4>
-                    <span className="text-sm font-mono text-gold-600 dark:text-gold-400">{exp.period}</span>
-                  </div>
-                  <h5 className="text-md text-gray-700 dark:text-gray-300 mb-2 font-medium">{exp.company}</h5>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{exp.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {RESEARCH.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: (index % 2) * 0.12 }}
+              className="flex flex-col p-6 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-cyan-500/40 backdrop-blur-sm transition-all duration-300 group"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-xs font-semibold">
+                  <BookOpen size={13} />
+                  {item.type}
+                </span>
+                <span className="text-xs font-mono text-slate-400">{item.year}</span>
+              </div>
 
+              <h3 className="text-lg font-heading font-bold text-white mb-3 leading-snug group-hover:text-cyan-300 transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-xs sm:text-sm italic text-slate-400 mb-4 leading-relaxed">{item.venue}</p>
+
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">
+                <span className="font-mono text-cyan-400">Authors: </span>
+                {item.authors.map((a, i) => (
+                  <React.Fragment key={a}>
+                    <span className={a.includes(OWNER) ? 'text-white font-semibold' : ''}>{a}</span>
+                    {i < item.authors.length - 1 ? ', ' : ''}
+                  </React.Fragment>
+                ))}
+              </p>
+
+              <div className="mt-auto pt-4 border-t border-slate-800">
+                {item.doi ? (
+                  <a
+                    href={item.doi}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 hover:text-emerald-300 break-all"
+                  >
+                    <ExternalLink size={14} className="shrink-0" />
+                    DOI: {item.doi.replace('https://', '')}
+                  </a>
+                ) : (
+                  <span className="inline-flex items-center gap-2 text-xs font-mono text-amber-300">
+                    <Clock size={14} className="shrink-0" />
+                    {item.status}
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

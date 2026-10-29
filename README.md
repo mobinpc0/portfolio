@@ -16,7 +16,7 @@ A modern, interactive personal portfolio built with **React 19**, **Three.js**, 
 - **Smooth Animations** — Section transitions powered by Framer Motion
 - **Custom Cursor** — Unique cursor effect on desktop (hidden on touch devices)
 - **Responsive Design** — Optimized for mobile, tablet, and desktop
-- **Sections** — Hero, About, Skills, Projects, Research, Gallery, Contact
+- **Sections** — Hero, About, Skills, Experience & Education, Projects, Research, Achievements & Certificates, Contact
 
 ---
 
@@ -42,12 +42,13 @@ portfolio-main/
 │   ├── About.tsx           # About section
 │   ├── Contact.tsx         # Contact form / info
 │   ├── CustomCursor.tsx    # Custom cursor (desktop only)
-│   ├── Gallery.tsx         # Photo gallery grid
+│   ├── Achievements.tsx    # Achievements & certificates (click to enlarge)
+│   ├── Experience.tsx      # Education + experience timeline
 │   ├── Hero.tsx            # 3D animated hero with sphere
 │   ├── Navbar.tsx          # Navigation bar + mobile menu
 │   ├── Projects.tsx        # Project showcase cards
-│   ├── Research.tsx        # Research publications
-│   ├── Skills.tsx          # Skills with progress bars
+│   ├── Research.tsx        # Conference papers with DOIs
+│   ├── Skills.tsx          # Skills + tool logos by domain
 │   └── ThemeContext.tsx    # Dark/light theme provider
 ├── App.tsx                 # Root component
 ├── index.tsx               # React entry point
@@ -110,27 +111,29 @@ portfolio-main/
 
 ## ✏️ Customization
 
-All portfolio content is centralized in **`constants.ts`** — edit this single file to update:
+All portfolio content is centralized in **`constants.ts`**. Images live in **`public/img/`** (`projects/`, `certs/`, `logos/`, `profile.jpg`).
 
-| Export        | What it controls                              |
-| ------------- | --------------------------------------------- |
-| `NAV_LINKS`   | Navigation menu items                         |
-| `SKILLS`      | Skill names and proficiency levels (0–100)    |
-| `EXPERIENCES` | Work & training experience entries            |
-| `PROJECTS`    | Project cards (title, image, description, tech)|
-| `RESEARCH`    | Research publications and journal info        |
-| `GALLERY`     | Photo gallery image URLs and titles           |
+| Export          | What it controls                                           |
+| --------------- | ---------------------------------------------------------- |
+| `PROFILE`       | Name, email, phone, LinkedIn, GitHub, location             |
+| `NAV_LINKS`     | Navigation menu items                                      |
+| `SKILL_DOMAINS` | Skill tabs: skills list and tool logos                     |
+| `EDUCATION`     | Degrees and results                                        |
+| `EXPERIENCES`   | Training and club experience                               |
+| `PROJECTS`      | Project cards (image, bullet points, tech, links)          |
+| `RESEARCH`      | Papers (venue, authors, DOI or status)                     |
+| `ACHIEVEMENTS`  | Rank, competitions and certificates (image in `public/img/certs`) |
 
-TypeScript interfaces for the above are defined in **`types.ts`**.
+TypeScript interfaces are in **`types.ts`**. To add a tool logo, drop the file in `public/img/logos/` and reference it from `SKILL_DOMAINS`.
 
 ### Theme Colors
 
-Theme colors (gold accents, dark mode backgrounds) are configured in the Tailwind config inside `index.html`:
+Theme colors (cyan accents, dark backgrounds) are configured in the Tailwind config inside `index.html`:
 
 ```js
 colors: {
-  gold:  { 400: '#FACC15', 500: '#EAB308', 600: '#CA8A04' },
-  dark:  { 900: '#0f0f0f', 800: '#1a1a1a', 700: '#2a2a2a' }
+  gold: { 400: '#38BDF8', 500: '#00F0FF', 600: '#0284C7' },
+  dark: { 950: '#030712', 900: '#060B18', 800: '#0F172A' }
 }
 ```
 

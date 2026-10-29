@@ -1,119 +1,193 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SKILLS } from '../constants';
-import { useTheme } from './ThemeContext';
+import { SKILL_DOMAINS } from '../constants';
+import { Tool } from '../types';
+import { Cpu, Zap, Activity, Radio, Users, Terminal, Layers, Wrench } from 'lucide-react';
 
-const skillColors = [
-  { bg: 'rgba(234,179,8,0.15)', border: 'rgba(234,179,8,0.4)', text: '#EAB308' },
-  { bg: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.4)', text: '#3B82F6' },
-  { bg: 'rgba(168,85,247,0.15)', border: 'rgba(168,85,247,0.4)', text: '#A855F7' },
-  { bg: 'rgba(34,197,94,0.15)', border: 'rgba(34,197,94,0.4)', text: '#22C55E' },
-  { bg: 'rgba(236,72,153,0.15)', border: 'rgba(236,72,153,0.4)', text: '#EC4899' },
-  { bg: 'rgba(249,115,22,0.15)', border: 'rgba(249,115,22,0.4)', text: '#F97316' },
-];
-
-const floatClasses = ['animate-float-slow', 'animate-float-medium', 'animate-float-fast'];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
+const domainIcons: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  circuit: Cpu,
+  embedded: Radio,
+  power: Zap,
+  software: Activity,
+  professional: Users,
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: 'spring' as const, stiffness: 100, damping: 12 },
-  },
-};
+// Flatten all unique tools for the animated scrolling marquee
+const allToolsMap = new Map<string, Tool>();
+SKILL_DOMAINS.forEach((domain) => {
+  domain.tools.forEach((tool) => {
+    if (!allToolsMap.has(tool.name)) {
+      allToolsMap.set(tool.name, tool);
+    }
+  });
+});
+const allTools = Array.from(allToolsMap.values());
+
+const ToolTile: React.FC<{ tool: Tool }> = ({ tool }) => (
+  <div className="flex flex-col items-center gap-2 w-28 sm:w-32 shrink-0 group">
+    <div className="w-full h-16 sm:h-20 rounded-xl bg-white flex items-center justify-center p-2.5 shadow-[0_0_18px_rgba(0,240,255,0.08)] border border-slate-700/40 group-hover:border-cyan-400/80 group-hover:scale-105 transition-all duration-300">
+      {tool.logo ? (
+        <img
+          src={tool.logo}
+          alt={tool.name}
+          loading="lazy"
+          className="max-h-full max-w-full object-contain filter group-hover:brightness-105"
+        />
+      ) : (
+        <span className="font-heading font-bold text-base text-slate-800">{tool.name}</span>
+      )}
+    </div>
+    <span className="text-[11px] font-mono text-slate-300 text-center leading-tight group-hover:text-cyan-300 transition-colors">
+      {tool.name}
+    </span>
+  </div>
+);
 
 const Skills: React.FC = () => {
-  const { theme } = useTheme();
-
   return (
-    <section id="skills" className="py-16 sm:py-24 bg-gray-50 dark:bg-black relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-1/4 -left-20 w-72 h-72 rounded-full opacity-20 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #EAB308, transparent)' }}
-        />
-        <div
-          className="absolute bottom-1/4 -right-20 w-72 h-72 rounded-full opacity-10 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #3B82F6, transparent)' }}
-        />
-      </div>
+    <section id="skills" className="py-20 sm:py-28 bg-dark-950 relative overflow-hidden circuit-grid">
+      {/* Background Lighting */}
+      <div className="absolute top-1/4 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="mb-10 sm:mb-16 text-center">
-          <h3 className="text-sm font-bold tracking-widest text-gold-500 mb-2">EXPERTISE</h3>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 dark:text-white">Technical Arsenal</h2>
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
+        {/* Header */}
+        <div className="mb-14 sm:mb-18 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-widest uppercase mb-3">
+            <Terminal size={13} /> // 02. TECHNICAL MATRIX
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight">
+            Skills & Tools Arsenal
+          </h2>
+          <p className="text-slate-400 max-w-2xl mx-auto mt-3 text-sm sm:text-base font-light">
+            Continuous engineering competencies across IC physical design, firmware architecture, power systems, and computation.
+          </p>
         </div>
 
-        {/* Floating Skill Tags */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 max-w-3xl mx-auto"
-        >
-          {SKILLS.map((skill, index) => {
-            const color = skillColors[index % skillColors.length];
-            const floatClass = floatClasses[index % floatClasses.length];
-            return (
-              <motion.div
-                key={skill.name}
-                variants={itemVariants}
-                whileHover={{ scale: 1.1, y: -5 }}
-                className={`${floatClass} px-4 sm:px-5 py-2 sm:py-3 rounded-full backdrop-blur-sm cursor-default transition-shadow duration-300`}
-                style={{
-                  background: color.bg,
-                  border: `1px solid ${color.border}`,
-                  animationDelay: `${index * 0.3}s`,
-                }}
-              >
-                <span
-                  className="text-sm sm:text-base font-semibold tracking-wide whitespace-nowrap"
-                  style={{ color: color.text }}
-                >
-                  {skill.name}
-                </span>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+        {/* Animated Continuous Scrolling Tools Marquee */}
+        <div className="mb-16 sm:mb-20">
+          <div className="flex items-center justify-between mb-4 px-2">
+            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase tracking-wider">
+              <Wrench size={14} />
+              <span>EDA & SOFTWARE SUITE (AUTO-SCROLLING // HOVER TO PAUSE)</span>
+            </div>
+            <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
+              {allTools.length} VERIFIED TOOLS
+            </span>
+          </div>
 
-        {/* Skill Bars */}
-        <div className="max-w-2xl mx-auto space-y-5 sm:space-y-6">
-          {SKILLS.map((skill, index) => {
-            const color = skillColors[index % skillColors.length];
+          <div className="relative w-full overflow-hidden rounded-2xl bg-slate-900/40 border border-slate-800/80 p-5 backdrop-blur-md">
+            {/* Left & Right Gradient Shadows for seamless fade */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-dark-950 via-dark-950/80 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-dark-950 via-dark-950/80 to-transparent z-10 pointer-events-none" />
+
+            {/* Marquee Track (duplicated for seamless loop) */}
+            <div className="animate-marquee gap-6 sm:gap-8 items-center">
+              {[...allTools, ...allTools].map((tool, index) => (
+                <ToolTile key={`${tool.name}-${index}`} tool={tool} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* All Skill Domains (Rendered with Scroll Animations - No Click Needed) */}
+        <div className="space-y-8 sm:space-y-10">
+          {SKILL_DOMAINS.map((domain, index) => {
+            const IconComponent = domainIcons[domain.id] || Cpu;
+
             return (
               <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                key={domain.id}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
+                className="bg-slate-900/60 border border-slate-800/90 hover:border-cyan-500/40 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden transition-all duration-300 group"
               >
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
-                  <span className="text-xs font-mono text-gray-500 dark:text-gray-400">{skill.level}%</span>
+                {/* Domain Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-800/80">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 group-hover:border-cyan-400 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.15)]">
+                      <IconComponent size={24} />
+                    </div>
+                    <div>
+                      <div className="text-xs font-mono text-cyan-400">{domain.code}</div>
+                      <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-cyan-300 transition-colors">
+                        {domain.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-400 font-light">{domain.subtitle}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 self-start sm:self-auto text-xs font-mono text-slate-400 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+                    <Layers size={14} className="text-cyan-400" />
+                    <span>{domain.skills.length} COMPETENCIES</span>
+                  </div>
                 </div>
-                <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full"
-                    style={{ background: `linear-gradient(90deg, ${color.text}, ${color.border})` }}
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, delay: 0.3 + index * 0.1, ease: 'easeOut' }}
-                  />
+
+                {/* Two-column layout: Left for Core Skills, Right for Associated Hardware & Software */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+                  {/* Left Column: Core Skills & Focus Areas */}
+                  <div className="lg:col-span-7 xl:col-span-8">
+                    <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 inline-block" />
+                      Core Skills & Focus Areas:
+                    </div>
+                    <div className="flex flex-wrap gap-2 sm:gap-2.5">
+                      {domain.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3.5 py-1.5 rounded-lg bg-slate-950 border border-cyan-500/25 text-slate-200 text-xs sm:text-sm hover:border-cyan-400/80 hover:text-cyan-300 transition-colors"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Extra if present (e.g. Languages) */}
+                    {domain.extra && (
+                      <div className="pt-4 mt-5 border-t border-slate-800/60 flex flex-wrap items-center gap-3 text-xs font-mono">
+                        <span className="text-slate-400 uppercase tracking-wider">{domain.extra.label}:</span>
+                        <div className="flex flex-wrap gap-2">
+                          {domain.extra.items.map((item) => (
+                            <span
+                              key={item}
+                              className="px-2.5 py-1 rounded bg-slate-950 border border-cyan-500/30 text-cyan-300"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right Column: Associated Hardware & Software */}
+                  <div className="lg:col-span-5 xl:col-span-4 lg:border-l lg:border-slate-800/80 lg:pl-8 pt-4 lg:pt-0 border-t lg:border-t-0 border-slate-800/60">
+                    <div className="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                      <Wrench size={13} className="text-cyan-400" />
+                      Associated Hardware & Software:
+                    </div>
+                    <div className="flex flex-wrap gap-2 sm:gap-2.5">
+                      {domain.tools.map((tool) => (
+                        <div
+                          key={tool.name}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-950/90 border border-slate-700/80 hover:border-cyan-400/60 text-slate-200 text-xs font-mono transition-all duration-200 shadow-sm group/tool"
+                        >
+                          {tool.logo ? (
+                            <div className="w-5 h-5 rounded bg-white flex items-center justify-center p-0.5 shrink-0 shadow-sm">
+                              <img src={tool.logo} alt="" className="max-h-full max-w-full object-contain" />
+                            </div>
+                          ) : (
+                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                          )}
+                          <span className="group-hover/tool:text-cyan-300 transition-colors font-medium">
+                            {tool.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             );

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Md. Samiul Islam Mobin | Portfolio</title>
+    <title>Md. Samiul Islam Mobin | Electrical & Electronic Engineer</title>
+    <meta name="description" content="Portfolio of Md. Samiul Islam Mobin, Electrical & Electronic Engineer (VLSI, embedded systems, power systems)." />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -11,44 +12,48 @@
         theme: {
           extend: {
             colors: {
+              tech: {
+                cyan: '#00F0FF',
+                cyanDim: 'rgba(0, 240, 255, 0.15)',
+                blue: '#2563EB',
+                blueLight: '#38BDF8',
+                emerald: '#10B981',
+                purple: '#8B5CF6',
+              },
+              cyan: {
+                400: '#22d3ee',
+                500: '#06b6d4',
+                600: '#0891b2',
+              },
               gold: {
-                400: '#FACC15',
-                500: '#EAB308',
-                600: '#CA8A04',
+                400: '#38BDF8',
+                500: '#00F0FF',
+                600: '#0284C7',
               },
               dark: {
-                900: '#0f0f0f',
-                800: '#1a1a1a',
-                700: '#2a2a2a',
+                950: '#030712',
+                900: '#060B18',
+                850: '#0B132B',
+                800: '#0F172A',
+                700: '#1E293B',
               }
             },
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
+              heading: ['Space Grotesk', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
             }
           }
         }
       }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Styles moved to index.css -->
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "framer-motion": "https://esm.sh/framer-motion@^12.34.2",
-    "lucide-react": "https://esm.sh/lucide-react@^0.574.0",
-    "@react-three/fiber": "https://esm.sh/@react-three/fiber@^9.5.0",
-    "@react-three/drei": "https://esm.sh/@react-three/drei@^10.7.7",
-    "three": "https://esm.sh/three@^0.183.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-gray-50 dark:bg-dark-900 text-gray-900 dark:text-gray-100 transition-colors duration-500 no-scrollbar">
+  <body class="bg-dark-950 text-slate-100 antialiased no-scrollbar selection:bg-cyan-500 selection:text-black">
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>

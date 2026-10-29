@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useTheme } from './ThemeContext';
 
 const CustomCursor: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     // Detect touch devices and hide cursor on them
@@ -58,15 +56,14 @@ const CustomCursor: React.FC = () => {
     <>
       {/* Outer ring */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50 hidden md:block border-2 border-gold-500"
-        style={{ opacity: 0.8 }}
+        className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50 hidden md:block border border-cyan-400/80 shadow-[0_0_12px_rgba(0,240,255,0.4)]"
         variants={variants}
         animate={isHovering ? 'hover' : 'default'}
         transition={{ type: 'spring', stiffness: 500, damping: 28 }}
       />
       {/* Inner dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-50 hidden md:block bg-gold-500"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-50 hidden md:block bg-cyan-400 shadow-[0_0_8px_#00F0FF]"
         animate={{
           x: mousePosition.x - 4,
           y: mousePosition.y - 4,
