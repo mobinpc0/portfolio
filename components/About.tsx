@@ -273,42 +273,24 @@ const About: React.FC = () => {
                 </div>
               </div>
 
-              {/* Clickable Certificate & Transcript Pictures */}
-              <div className="pt-4 border-t border-slate-800/80">
-                <div className="text-[11px] font-mono text-cyan-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <FileText size={13} />
-                    Certificate & Transcripts:
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-normal">Click to View</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  {bscDocs.map((doc) => (
-                    <button
-                      key={doc.image}
-                      type="button"
-                      onClick={() => setSelectedDoc(doc)}
-                      aria-label={`View ${doc.title}`}
-                      className="group/doc relative rounded-lg overflow-hidden border border-slate-800 hover:border-cyan-400 bg-slate-900 aspect-[3/4] flex flex-col justify-end p-2 text-left transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] cursor-pointer"
-                    >
-                      <img
-                        src={doc.image}
-                        alt={doc.title}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover object-top opacity-70 group-hover/doc:opacity-95 transition-opacity"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none" />
-                      <div className="relative z-10 flex items-center justify-between w-full">
-                        <span className="text-[9px] sm:text-[10px] font-mono text-cyan-300 font-semibold px-1 py-0.5 rounded bg-slate-950/85 border border-cyan-500/20">
-                          {doc.previewLabel}
-                        </span>
-                        <span className="p-1 rounded-full bg-slate-950/90 text-cyan-400 border border-cyan-500/30 opacity-80 group-hover/doc:opacity-100">
-                          <ZoomIn size={10} />
-                        </span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
+              {/* Action Buttons to View Certificate & Transcripts */}
+              <div className="pt-4 border-t border-slate-800/80 flex flex-wrap items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setSelectedDoc(bscDocs[0])}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-950/40 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-400 text-cyan-300 font-mono text-xs transition-all duration-300 shadow-sm hover:shadow-[0_0_15px_rgba(0,240,255,0.2)] cursor-pointer group"
+                >
+                  <FileText size={14} className="text-cyan-400 group-hover:scale-110 transition-transform" />
+                  <span>View Certificate</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedDoc(bscDocs[1])}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-400 text-slate-200 hover:text-cyan-300 font-mono text-xs transition-all duration-300 shadow-sm cursor-pointer group"
+                >
+                  <FileText size={14} className="text-cyan-400 group-hover:scale-110 transition-transform" />
+                  <span>View Transcripts</span>
+                </button>
               </div>
             </motion.div>
 
@@ -347,42 +329,24 @@ const About: React.FC = () => {
                 </div>
               </div>
 
-              {/* Clickable Certificate & Transcript Pictures */}
-              <div className="pt-4 border-t border-slate-800/80">
-                <div className="text-[11px] font-mono text-sky-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <FileText size={13} />
-                    Certificate & Transcript:
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-normal">Click to View</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2.5">
-                  {hscDocs.map((doc) => (
-                    <button
-                      key={doc.image}
-                      type="button"
-                      onClick={() => setSelectedDoc(doc)}
-                      aria-label={`View ${doc.title}`}
-                      className="group/doc relative rounded-lg overflow-hidden border border-slate-800 hover:border-sky-400 bg-slate-900 aspect-[4/3] flex flex-col justify-end p-2 text-left transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-[0_0_15px_rgba(56,189,248,0.25)] cursor-pointer"
-                    >
-                      <img
-                        src={doc.image}
-                        alt={doc.title}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover object-top opacity-70 group-hover/doc:opacity-95 transition-opacity"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none" />
-                      <div className="relative z-10 flex items-center justify-between w-full">
-                        <span className="text-[9px] sm:text-[10px] font-mono text-sky-300 font-semibold px-1 py-0.5 rounded bg-slate-950/85 border border-sky-500/20">
-                          {doc.previewLabel}
-                        </span>
-                        <span className="p-1 rounded-full bg-slate-950/90 text-sky-400 border border-sky-500/30 opacity-80 group-hover/doc:opacity-100">
-                          <ZoomIn size={10} />
-                        </span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
+              {/* Action Buttons to View Certificate & Transcript */}
+              <div className="pt-4 border-t border-slate-800/80 flex flex-wrap items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setSelectedDoc(hscDocs[0])}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-sky-950/40 hover:bg-sky-500/20 border border-sky-500/30 hover:border-sky-400 text-sky-300 font-mono text-xs transition-all duration-300 shadow-sm hover:shadow-[0_0_15px_rgba(56,189,248,0.2)] cursor-pointer group"
+                >
+                  <FileText size={14} className="text-sky-400 group-hover:scale-110 transition-transform" />
+                  <span>View Certificate</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedDoc(hscDocs[1])}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700/80 hover:border-sky-400 text-slate-200 hover:text-sky-300 font-mono text-xs transition-all duration-300 shadow-sm cursor-pointer group"
+                >
+                  <FileText size={14} className="text-sky-400 group-hover:scale-110 transition-transform" />
+                  <span>View Transcript</span>
+                </button>
               </div>
             </motion.div>
           </div>
@@ -403,8 +367,8 @@ const About: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-950/80">
-              <div className="flex items-center gap-2.5 min-w-0 pr-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-950/90 gap-3">
+              <div className="flex items-center gap-2.5 min-w-0 pr-2">
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 shrink-0">
                   {selectedDoc.type}
                 </span>
@@ -412,24 +376,45 @@ const About: React.FC = () => {
                   {selectedDoc.title}
                 </span>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <a
-                  href={selectedDoc.image}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-cyan-400 hover:bg-slate-700 transition-colors"
-                  title="Open full size in new tab"
-                >
-                  <ExternalLink size={16} />
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setSelectedDoc(null)}
-                  className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-red-400 hover:bg-slate-700 transition-colors cursor-pointer"
-                  aria-label="Close"
-                >
-                  <X size={16} />
-                </button>
+
+              <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
+                {/* Document page switchers */}
+                <div className="flex items-center gap-1.5 bg-slate-900 p-1 rounded-lg border border-slate-800">
+                  {(selectedDoc.image.includes('bsc') ? bscDocs : hscDocs).map((doc) => (
+                    <button
+                      key={doc.image}
+                      type="button"
+                      onClick={() => setSelectedDoc(doc)}
+                      className={`px-2.5 py-1 rounded text-[11px] font-mono transition-colors cursor-pointer ${
+                        selectedDoc.image === doc.image
+                          ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold shadow-sm'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      {doc.previewLabel}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <a
+                    href={selectedDoc.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-cyan-400 hover:bg-slate-700 transition-colors"
+                    title="Open full size in new tab"
+                  >
+                    <ExternalLink size={16} />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDoc(null)}
+                    className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-red-400 hover:bg-slate-700 transition-colors cursor-pointer"
+                    aria-label="Close"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
               </div>
             </div>
 
