@@ -209,7 +209,7 @@ const Hero: React.FC = () => {
           className="text-slate-300 max-w-2xl mx-auto text-base sm:text-lg md:text-xl font-sans leading-relaxed mb-8 px-2 font-light"
         >
           Electrical & Electronic Engineer: <span className="text-cyan-300 font-medium">VLSI & Semiconductor Enthusiast</span> and{' '}
-          <span className="text-sky-300 font-medium">Power System Analyzer</span>. Hands-on training in IC design and power plant engineering, with IoT, power electronics and robotics projects.
+          <span className="text-sky-300 font-medium">Researcher</span>. Hands-on training in IC design and power plant engineering, with IoT, power electronics and robotics projects.
         </motion.p>
 
         {/* Key Engineering Specs Chips */}
