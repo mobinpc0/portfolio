@@ -17,6 +17,25 @@ export const PROFILE = {
   github: 'https://github.com/mobinpc0',
   githubLabel: 'github.com/mobinpc0',
   location: 'Mirpur-2, Dhaka, Bangladesh',
+  cv: '/Samiul_Islam_Mobin_CV.pdf',
+};
+
+export const PERSONAL_INFO = {
+  name: 'Md. Samiul Islam Mobin',
+  fathersName: 'Md. Idrish Ali Sardar',
+  mothersName: 'Miss. Sabina Yeasmin',
+  birthDate: '29-03-2002',
+  religion: 'Islam',
+  maritalStatus: 'Unmarried',
+  nationality: 'Bangladeshi',
+  permanentAddress: {
+    landmark: 'Beside Sotihat K.T High School, Sotihat Bazar',
+    village: 'Sreerampur',
+    postOffice: 'Sotihat (6511)',
+    policeStation: 'Manda',
+    district: 'Naogaon',
+    full: 'Village: Sreerampur, Post: Sotihat (6511), P.S: Manda, Dist.: Naogaon',
+  },
 };
 
 export const NAV_LINKS = [

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Cpu, Zap } from 'lucide-react';
-import { NAV_LINKS } from '../constants';
+import { Menu, X, Cpu, Zap, Download } from 'lucide-react';
+import { NAV_LINKS, PROFILE } from '../constants';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +43,17 @@ const Navbar: React.FC = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
+            <a
+              href={PROFILE.cv}
+              download="Md_Samiul_Islam_Mobin_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 text-xs font-mono tracking-wider transition-all duration-200"
+            >
+              <Download size={13} />
+              <span>CV</span>
+            </a>
+
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
               ACTIVE
@@ -81,6 +92,17 @@ const Navbar: React.FC = () => {
                 {link.name}
               </a>
             ))}
+            <a
+              href={PROFILE.cv}
+              download="Md_Samiul_Islam_Mobin_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="mt-4 flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-sm tracking-wider shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+            >
+              <Download size={16} />
+              <span>DOWNLOAD CV</span>
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

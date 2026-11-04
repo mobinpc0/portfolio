@@ -3,7 +3,8 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Ring, Torus, Octahedron, Icosahedron } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import { Cpu, Zap, ArrowRight, FileText, ChevronDown } from 'lucide-react';
+import { Cpu, Zap, ArrowRight, FileText, ChevronDown, Download } from 'lucide-react';
+import { PROFILE } from '../constants';
 
 // Error boundary to catch WebGL crashes gracefully
 class CanvasErrorBoundary extends React.Component<
@@ -241,18 +242,28 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 flex-wrap"
         >
           <a
-            href="#projects"
-            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold tracking-wide flex items-center justify-center gap-2 hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-[0_0_25px_rgba(0,240,255,0.4)] group"
+            href={PROFILE.cv}
+            download="Md_Samiul_Islam_Mobin_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-bold tracking-wide flex items-center justify-center gap-2.5 hover:from-cyan-300 hover:to-blue-400 transition-all duration-300 shadow-[0_0_25px_rgba(0,240,255,0.45)] hover:shadow-[0_0_35px_rgba(0,240,255,0.7)] group"
           >
-            <span>VIEW ENGINEERING PROJECTS</span>
+            <Download size={18} className="transform group-hover:translate-y-0.5 transition-transform" />
+            <span>DOWNLOAD CV</span>
+          </a>
+          <a
+            href="#projects"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-slate-900/80 border border-slate-700 hover:border-cyan-400/60 text-slate-200 hover:text-white font-medium tracking-wide flex items-center justify-center gap-2 hover:bg-slate-800/80 transition-all duration-300 group"
+          >
+            <span>VIEW PROJECTS</span>
             <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
           </a>
           <a
             href="#contact"
-            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-slate-900/80 border border-slate-700 hover:border-cyan-400/50 text-slate-200 hover:text-white font-medium tracking-wide flex items-center justify-center gap-2 transition-all duration-300"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-slate-900/80 border border-slate-700 hover:border-cyan-400/60 text-slate-200 hover:text-white font-medium tracking-wide flex items-center justify-center gap-2 hover:bg-slate-800/80 transition-all duration-300"
           >
             <span>GET IN TOUCH</span>
           </a>
