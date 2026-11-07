@@ -1,10 +1,11 @@
-import React, { useRef, useMemo, Suspense } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Ring, Torus, Octahedron, Icosahedron } from '@react-three/drei';
+import { Float, Torus, Octahedron, Icosahedron } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import { Cpu, Zap, ArrowRight, FileText, ChevronDown, Download } from 'lucide-react';
+import { Cpu, ArrowRight, Download } from 'lucide-react';
 import { PROFILE } from '../constants';
+import { useTheme } from './ThemeContext';
 
 // Error boundary to catch WebGL crashes gracefully
 class CanvasErrorBoundary extends React.Component<
@@ -33,7 +34,7 @@ class CanvasErrorBoundary extends React.Component<
 }
 
 // 3D Quantum Silicon Core with Electronic Orbitals
-const TechCore = () => {
+const TechCore: React.FC<{ isLight: boolean }> = ({ isLight }) => {
   const groupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const ring1Ref = useRef<THREE.Mesh>(null);
@@ -65,8 +66,10 @@ const TechCore = () => {
     }
   });
 
-  const primaryColor = '#00F0FF';
-  const wireColor = '#38BDF8';
+  const primaryColor = isLight ? '#0891B2' : '#00F0FF';
+  const wireColor = isLight ? '#0284C7' : '#38BDF8';
+  const coreColor = isLight ? '#E0F2FE' : '#0A192F';
+  const coreEmissive = isLight ? '#38BDF8' : '#003B46';
 
   return (
     <group ref={groupRef}>
@@ -74,11 +77,11 @@ const TechCore = () => {
       <Float speed={2} rotationIntensity={0.5} floatIntensity={0.8}>
         <Icosahedron args={[1.3, 0]} ref={coreRef}>
           <meshStandardMaterial
-            color="#0A192F"
-            emissive="#003B46"
-            emissiveIntensity={0.6}
+            color={coreColor}
+            emissive={coreEmissive}
+            emissiveIntensity={isLight ? 0.35 : 0.6}
             roughness={0.2}
-            metalness={0.9}
+            metalness={isLight ? 0.4 : 0.9}
             wireframe={false}
           />
         </Icosahedron>
@@ -89,7 +92,7 @@ const TechCore = () => {
             color={primaryColor}
             wireframe={true}
             transparent
-            opacity={0.4}
+            opacity={isLight ? 0.55 : 0.4}
           />
         </Icosahedron>
 
@@ -98,7 +101,7 @@ const TechCore = () => {
           <meshStandardMaterial
             color={primaryColor}
             emissive={primaryColor}
-            emissiveIntensity={2.5}
+            emissiveIntensity={isLight ? 1.2 : 2.5}
             roughness={0.1}
             metalness={1}
           />
@@ -109,7 +112,7 @@ const TechCore = () => {
           <meshStandardMaterial
             color={primaryColor}
             emissive={primaryColor}
-            emissiveIntensity={1.5}
+            emissiveIntensity={isLight ? 0.8 : 1.5}
             metalness={0.9}
             roughness={0.1}
           />
@@ -120,7 +123,7 @@ const TechCore = () => {
           <meshStandardMaterial
             color={wireColor}
             emissive={wireColor}
-            emissiveIntensity={1.2}
+            emissiveIntensity={isLight ? 0.7 : 1.2}
             metalness={0.9}
             roughness={0.1}
           />
@@ -129,9 +132,9 @@ const TechCore = () => {
         {/* Orbital Ring 3 */}
         <Torus ref={ring3Ref} args={[3.1, 0.012, 16, 100]}>
           <meshStandardMaterial
-            color="#818CF8"
+            color={isLight ? '#4F46E5' : '#818CF8'}
             emissive="#6366F1"
-            emissiveIntensity={0.9}
+            emissiveIntensity={isLight ? 0.5 : 0.9}
             metalness={0.8}
             roughness={0.2}
           />
@@ -156,6 +159,9 @@ const FallbackTechGraphic = () => (
 );
 
 const Hero: React.FC = () => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   return (
     <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-dark-950 text-slate-100 circuit-grid pt-24 pb-16">
       {/* Dynamic Circuit & Grid Atmosphere */}
@@ -174,18 +180,24 @@ const Hero: React.FC = () => {
             style={{ background: 'transparent' }}
           >
             <Suspense fallback={null}>
-              <ambientLight intensity={0.4} />
-              <directionalLight position={[10, 10, 10]} intensity={2} color="#00F0FF" />
+              <ambientLight intensity={isLight ? 0.9 : 0.4} />
+              <directionalLight position={[10, 10, 10]} intensity={2} color={isLight ? '#0891B2' : '#00F0FF'} />
               <directionalLight position={[-10, -10, -5]} intensity={1.5} color="#3B82F6" />
-              <pointLight position={[0, 0, 4]} color="#00F0FF" intensity={3} distance={8} />
-              <TechCore />
+              <pointLight position={[0, 0, 4]} color={isLight ? '#0284C7' : '#00F0FF'} intensity={isLight ? 1.5 : 3} distance={8} />
+              <TechCore isLight={isLight} />
             </Suspense>
           </Canvas>
         </CanvasErrorBoundary>
       </div>
 
       {/* Tech Overlay for high contrast readability */}
-      <div className="absolute inset-0 z-[5] pointer-events-none bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-slate-950/90 dark:from-dark-950/70 dark:via-dark-950/40 dark:to-dark-950" />
+      <div
+        className={`absolute inset-0 z-[5] pointer-events-none ${
+          isLight
+            ? 'bg-gradient-to-b from-white/60 via-white/40 to-slate-50/90'
+            : 'bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-slate-950/90 dark:from-dark-950/70 dark:via-dark-950/40 dark:to-dark-950'
+        }`}
+      />
 
       {/* Hero Content */}
       <div className="z-10 container mx-auto px-4 sm:px-6 text-center max-w-4xl relative">
@@ -197,7 +209,13 @@ const Hero: React.FC = () => {
           className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-extrabold text-white mb-6 tracking-tight leading-tight"
         >
           MD. SAMIUL <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 text-glow-cyan">
+          <span
+            className={`text-transparent bg-clip-text ${
+              isLight
+                ? 'bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-600'
+                : 'bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 text-glow-cyan'
+            }`}
+          >
             ISLAM MOBIN
           </span>
         </motion.h1>

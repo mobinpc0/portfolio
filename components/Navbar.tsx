@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Cpu, Zap, Download } from 'lucide-react';
+import { Menu, X, Cpu, Zap, Download, Sun, Moon } from 'lucide-react';
 import { NAV_LINKS, PROFILE } from '../constants';
+import { useTheme } from './ThemeContext';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const isLight = theme === 'light';
 
   return (
     <>
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
         className="fixed top-5 left-0 right-0 z-40 flex justify-center px-4"
       >
-        <div className="backdrop-blur-xl bg-dark-900/85 border border-cyan-400/20 rounded-full px-5 sm:px-6 py-2.5 flex items-center justify-between shadow-[0_10px_30px_rgba(0,0,0,0.3)] max-w-5xl w-full">
+        <div
+          className={`backdrop-blur-xl rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between max-w-5xl w-full transition-colors duration-300 ${
+            isLight
+              ? 'bg-white/90 border border-slate-200/90 shadow-[0_8px_30px_rgba(15,23,42,0.08)]'
+              : 'bg-dark-900/85 border border-cyan-400/20 shadow-[0_10px_30px_rgba(0,0,0,0.3)]'
+          }`}
+        >
           {/* Logo / Home Link */}
           <a href="#" className="flex items-center space-x-2.5 group">
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 transition-colors shadow-[0_0_10px_rgba(0,240,255,0.2)]">
@@ -28,7 +37,7 @@ const Navbar: React.FC = () => {
           </a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-7">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-7">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.name}
@@ -42,7 +51,22 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-2.5">
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+              title={isLight ? 'Light Mode (Click for Dark)' : 'Dark Mode (Click for Light)'}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 cursor-pointer ${
+                isLight
+                  ? 'bg-amber-400/15 border-amber-400/60 text-amber-500 hover:bg-amber-400 hover:text-slate-950 shadow-[0_0_12px_rgba(251,191,36,0.3)]'
+                  : 'bg-cyan-500/10 border-cyan-400/40 text-cyan-400 hover:bg-cyan-400 hover:text-slate-950 shadow-[0_0_12px_rgba(0,240,255,0.2)]'
+              }`}
+            >
+              {isLight ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
             <a
               href={PROFILE.cv}
               download="Md_Samiul_Islam_Mobin_CV.pdf"
@@ -54,7 +78,7 @@ const Navbar: React.FC = () => {
               <span>CV</span>
             </a>
 
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono">
+            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
               ACTIVE
             </div>
@@ -77,9 +101,9 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-30 bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center space-y-7 md:hidden circuit-grid"
+            className="fixed inset-0 z-30 bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center space-y-6 md:hidden circuit-grid"
           >
-            <div className="flex items-center gap-2 mb-4 text-cyan-400 font-mono text-xs uppercase tracking-widest">
+            <div className="flex items-center gap-2 mb-2 text-cyan-400 font-mono text-xs uppercase tracking-widest">
               <Zap size={14} /> Systems Navigation
             </div>
             {NAV_LINKS.map((link) => (
@@ -98,7 +122,7 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
-              className="mt-4 flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-sm tracking-wider shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+              className="mt-2 flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-sm tracking-wider shadow-[0_0_20px_rgba(0,240,255,0.4)]"
             >
               <Download size={16} />
               <span>DOWNLOAD CV</span>

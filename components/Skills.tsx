@@ -114,8 +114,8 @@ const Skills: React.FC = () => {
 
           <div className="relative w-full overflow-hidden rounded-2xl bg-slate-900/40 border border-slate-800/80 p-5 backdrop-blur-md">
             {/* Left & Right Gradient Shadows for seamless fade */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-dark-950 via-dark-950/80 to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-dark-950 via-dark-950/80 to-transparent z-10 pointer-events-none" />
+            <div className="marquee-fade-left absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-dark-950 via-dark-950/80 to-transparent z-10 pointer-events-none" />
+            <div className="marquee-fade-right absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-dark-950 via-dark-950/80 to-transparent z-10 pointer-events-none" />
 
             {/* Marquee Track (duplicated for seamless loop) */}
             <div className="animate-marquee gap-6 sm:gap-8 items-center">
